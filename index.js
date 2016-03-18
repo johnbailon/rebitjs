@@ -20,34 +20,6 @@ function Rebit(opts) {
   Rebit.prototype.vendor = new Vendor(this);
 }
 
-Rebit.prototype.user = function (user) {
-  var _this = this;
-  return new Promise(function(resolve, reject) {
-    if (user) {//TODO: confirm if update user doesnt work
-      // httpClient.post(_this.apiEndpoint + 'user')
-      //   .set('User-Agent', _this.userAgent)
-      //   .send({'token': _this.token})
-      //   .send(user)
-      //   .end(function(err, res) {
-      //     if (err) {
-      //       return reject(err);
-      //     }
-      //     resolve(res.body);
-      //   });
-    } else {
-      httpClient.get(_this.apiEndpoint + 'user')
-        .set('User-Agent', _this.userAgent)
-        .query({token: _this.token})
-        .end(function(err, res) {
-          if (err) {
-            return reject(err);
-          }
-          resolve(res.body);
-        });
-    }
-  });
-}
-
 Rebit.prototype.rates = function(currency) {
   var _this = this;
   return new Promise(function(resolve, reject) {
@@ -55,7 +27,7 @@ Rebit.prototype.rates = function(currency) {
       httpClient.get(_this.apiEndpoint + 'rates')
         .set('User-Agent', _this.userAgent)
         .query({token: _this.token})
-        .send(currency)
+        .query({currency: currency})
         .end(function(err, res) {
           if (err) {
             return reject(err);
@@ -90,6 +62,7 @@ Rebit.prototype.schedule = function() {
       });
   });
 }
+
 Rebit.prototype.strategies = function () {
   var _this = this;
   return new Promise(function(resolve, reject) {
