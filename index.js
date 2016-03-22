@@ -14,6 +14,7 @@ function Rebit(opts) {
   this.vendorToken = opts.vendorToken;
   this.apiEndpoint = !opts.apiEndpoint ? 'https://rebit.ph/api/v1/' : opts.apiEndpoint;
   this.userAgent = !opts.userAgent ? pjson.name + "-" + pjson.version : opts.userAgent;
+
   Rebit.prototype.user = new User(this);
   Rebit.prototype.recipient = new Recipient(this);
   Rebit.prototype.remittance = new Remittance(this);
