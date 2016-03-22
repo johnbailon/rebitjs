@@ -9,11 +9,20 @@ chai.use(chaiAsPromised);
 chai.should();
 
 var nockRebit = nock('https://rebit.ph/api/v1/')
-  .get("/provinces").query(true)
+  //.log(console.log)
+
+  //.get(/\b(?:(\bprovinces\b|\brecipients\b[^\/]|vendors))/).query(true)
+  //.reply(200,[])
+
+  .get("/provinces")
+  .query(true)
   .reply(200,[])
 
   .get("/recipients")
   .query(true)
+  .reply(200,[])
+
+  .get(/vendors\/(.*)\/credits[^\/]/).query(true)
   .reply(200,[])
 
   .get(/(.*?)/)
@@ -24,11 +33,9 @@ var nockRebit = nock('https://rebit.ph/api/v1/')
   .reply(200)
 
   .intercept(/(.*?)/, 'POST')
-  .reply(200)
-
+  .reply(200,{})
 
   .persist();
-  //.log(console.log);
 
 
 describe('rebit', function() {
@@ -149,6 +156,117 @@ describe('rebit', function() {
         describe('#update', function() {
           it('should return ok', function() {
             return rebit.vendor.update({name: "Rebit Secret Agents"}).should.not.be.rejected;
+          });
+        });
+
+        describe('rebit.vendor.credit', function() {
+          describe('#create', function() {
+            it('should return ok', function() {
+              return rebit.vendor.credit.create().should.eventually.be.an('object');
+            });
+          });
+
+          describe('#get', function() {
+            it('should return an object of vendor credit', function() {
+              return rebit.vendor.credit.get(1).should.eventually.be.an('object');
+            });
+          });
+
+          describe('#getAll', function() {
+            it('should return an array of vendor credit', function() {
+              //return rebit.vendor.credit.getAll().should.eventually.be.an('array');
+              return rebit.vendor.credit.getAll().should.not.be.rejected;
+            });
+          });
+        });
+
+        describe('rebit.vendor.recipient', function() {
+          describe('#create', function() {
+            it('should return ok', function() {
+              return rebit.vendor.recipient.create({first_name: 'John', last_name: 'Dela Cruz', mobile: '639178881234'}).should.eventually.be.an('object');
+            });
+          });
+
+          describe('#get', function() {
+            it('should return an object of vendor recipient', function() {
+              return rebit.vendor.recipient.get(1).should.eventually.be.an('object');
+            });
+          });
+
+          describe('#getAll', function() {
+            it('should return an array of vendor recipient', function() {
+              //return rebit.vendor.recipient.getAll().should.eventually.be.an('array');
+              return rebit.vendor.recipient.getAll().should.not.be.rejected;
+            });
+          });
+
+          describe('#update', function() {
+            it('should return ok', function() {
+              return rebit.vendor.recipient.update(1,{first_name: 'John', last_name: 'Dela Cruz', mobile: '639178881234'}).should.not.be.rejected;
+            });
+          });
+
+          describe('#delete', function() {
+            it('should return ok', function() {
+              return rebit.vendor.recipient.delete(1).should.not.be.rejected;
+            });
+          });
+        });
+
+        describe('rebit.vendor.user', function() {
+          describe('#create', function() {
+            it('should return ok', function() {
+              return rebit.vendor.user.create({email: 'john@sci.ph'}).should.eventually.be.an('object');
+            });
+          });
+
+          describe('#get', function() {
+            it('should return an object of vendor user', function() {
+              return rebit.vendor.user.get(1).should.eventually.be.an('object');
+            });
+          });
+
+          describe('#findByEmail', function() {
+            it('should return an object of vendor user', function() {
+              return rebit.vendor.user.findByEmail("john@sci.ph").should.eventually.be.an('object');
+            });
+          });
+
+          describe('#getAll', function() {
+            it('should return an array of vendor user', function() {
+              //return rebit.vendor.user.getAll().should.eventually.be.an('array');
+              return rebit.vendor.user.getAll().should.not.be.rejected;
+            });
+          });
+
+          describe('#update', function() {
+            it('should return an array of vendor user', function() {
+              return rebit.vendor.user.update(1,{first_name: 'John', last_name: 'Dela Cruz', mobile: '639178881234'}).should.not.be.rejected;
+            });
+          });
+
+          describe('#updatePassword', function() {
+            it('should return an array of vendor user', function() {
+              return rebit.vendor.user.updatePassword(1, {old_password: 'letmein', password: 'letwhoin', password_confirmation: 'letwhoin'}).should.not.be.rejected;
+            });
+          });
+
+          describe('#delete', function() {
+            it('should return ok', function() {
+              return rebit.vendor.user.delete(1).should.not.be.rejected;
+            });
+          });
+
+          describe('#instantRemit', function() {
+            it('should return an array of vendor user', function() {
+              return rebit.vendor.user.instantRemit({email: 'john@sci.ph', amount: 1000}).should.not.be.rejected;
+            });
+          });
+
+          describe('#upload', function() {
+            it('should return an array of vendor user', function() {
+              return rebit.vendor.user.upload(1,__dirname + '/id.jpg').should.not.be.rejected;
+            });
           });
         });
       });
