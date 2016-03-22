@@ -1,5 +1,9 @@
 # Rebit Javascript Client
 
+[Rebit](https://rebit.ph) allows anyone in the world to send money to the Philippines using Bitcoin.
+
+The term rebittance or "to rebit" was coined by the [SCI](http://sci.ph) team in 2014 _(despite some people implying they popularized it themselves.)_
+
 ```bash
 $ npm install rebit
 ```
@@ -13,5 +17,14 @@ console.dir(rebit);
 ```
 
 ```
-$ node test.js
+$ node index.js
 ```
+
+## TEST
+```
+$ REBIT_TOKEN=<token> VENDOR_TOKEN=<vendorToken> mocha
+```
+
+### TO DO
+* implement vendor/remittances
+* implement vendor/outgoing remittances
