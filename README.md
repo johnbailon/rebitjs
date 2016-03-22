@@ -2,7 +2,7 @@
 
 [Rebit](https://rebit.ph) allows anyone in the world to send money to the Philippines using Bitcoin.
 
-The term rebittance or "to rebit" was coined by the [SCI](http://sci.ph) team in 2014 _(despite some people implying they popularized it themselves.)_
+The term rebittance or "to rebit" was coined by the [SCI](http://sci.ph) team in 2014 _(despite some people implying they popularized it themselves :metal:)_
 
 ```bash
 $ npm install rebit
